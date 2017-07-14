@@ -8,10 +8,17 @@ const db = require('./_db');
 
 // Defining Contact Table Model
 const Contact = db.define('contact', {
-  first_name: Sequelize.STRING,
-  last_name: Sequelize.STRING,
+  first_name: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  last_name: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
   email: {
     type: Sequelize.STRING,
+    allowNull: false,
     validate: {
       isEmail: true
     }

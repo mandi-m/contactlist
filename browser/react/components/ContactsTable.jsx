@@ -6,12 +6,14 @@ import { Form, FormGroup, Button, Panel } from 'react-bootstrap'
 
 // ------------- Component
 const ContactsTable = (props) => {
+  const options = {
+  // afterInsertRow: onAfterInsertRow   // A hook for after insert rows
+};
   return (
     <div>
       <Panel header={'Contact List'}>
         <h1>Contact List</h1>
-      </Panel>
-      {/* <ul>
+        {/* <ul>
         {props.contacts.map(contact => (
           <li key={contact.id}>
             <div>
@@ -20,14 +22,15 @@ const ContactsTable = (props) => {
           </li>
         ))}
       </ul> */}
-      {
-      props.contacts && <BootstrapTable data={props.contacts} striped={true} hover={true}>
-        <TableHeaderColumn dataField="id" hidden={true} isKey={true} dataAlign="center" dataSort={true} >ID</TableHeaderColumn>
-        <TableHeaderColumn dataField="first_name" dataSort={true} filter={{ type: 'TextFilter', delay: 100 }}>First Name</TableHeaderColumn>
-        <TableHeaderColumn dataField="last_name" dataSort={true} filter={{ type: 'TextFilter', delay: 100 }}>Last Name</TableHeaderColumn>
-        <TableHeaderColumn dataField="email" dataSort={true} filter={{ type: 'TextFilter', delay: 100 }}>E-Mail</TableHeaderColumn>
-      </BootstrapTable>
-      }
+        {
+          props.contacts && <BootstrapTable data={props.contacts} insertRow={ true } striped={true} hover={true} options={ options }>
+            <TableHeaderColumn dataField="id" hidden={true} isKey={true} dataAlign="center" dataSort={true} >ID</TableHeaderColumn>
+            <TableHeaderColumn dataField="first_name" dataSort={true} filter={{ type: 'TextFilter', delay: 100 }}>First Name</TableHeaderColumn>
+            <TableHeaderColumn dataField="last_name" dataSort={true} filter={{ type: 'TextFilter', delay: 100 }}>Last Name</TableHeaderColumn>
+            <TableHeaderColumn dataField="email" dataSort={true} filter={{ type: 'TextFilter', delay: 100 }}>E-Mail</TableHeaderColumn>
+          </BootstrapTable>
+        }
+      </Panel>
     </div>
   );
 };
