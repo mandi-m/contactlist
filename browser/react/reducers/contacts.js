@@ -40,3 +40,11 @@ export const fetchContacts = () => {
       .catch(console.error);
   };
 };
+
+export const addContact = (contactData) => (dispatch) => {
+    axios.post('api/contacts/', contactData)
+      .then( () => {
+        dispatch(fetchContacts());
+      })
+      .catch(console.error);
+}

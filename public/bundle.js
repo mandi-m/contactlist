@@ -24280,7 +24280,7 @@ module.exports = function bind(fn, thisArg) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchContacts = exports.receiveContacts = undefined;
+exports.addContact = exports.fetchContacts = exports.receiveContacts = undefined;
 exports.default = reducer;
 
 var _axios = __webpack_require__(478);
@@ -24328,6 +24328,14 @@ var fetchContacts = exports.fetchContacts = function fetchContacts() {
   return function (dispatch) {
     _axios2.default.get('api/contacts/').then(function (response) {
       dispatch(receiveContacts(response.data));
+    }).catch(console.error);
+  };
+};
+
+var addContact = exports.addContact = function addContact(contactData) {
+  return function (dispatch) {
+    _axios2.default.post('api/contacts/', contactData).then(function () {
+      dispatch(fetchContacts());
     }).catch(console.error);
   };
 };
@@ -47262,6 +47270,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
@@ -47272,61 +47282,109 @@ var _reactBootstrapTable = __webpack_require__(720);
 
 var _reactBootstrap = __webpack_require__(786);
 
+var _contacts = __webpack_require__(267);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // Required libraries
+
+
 // ------------- Component
-// Required libraries
-var ContactsTable = function ContactsTable(props) {
-  var options = {
-    // afterInsertRow: onAfterInsertRow   // A hook for after insert rows
-  };
-  return _react2.default.createElement(
-    'div',
-    null,
-    _react2.default.createElement(
-      _reactBootstrap.Panel,
-      { header: 'Contact List' },
-      _react2.default.createElement(
-        'h1',
+var ContactsTable = function (_Component) {
+  _inherits(ContactsTable, _Component);
+
+  function ContactsTable(props) {
+    _classCallCheck(this, ContactsTable);
+
+    var _this = _possibleConstructorReturn(this, (ContactsTable.__proto__ || Object.getPrototypeOf(ContactsTable)).call(this, props));
+
+    _this.state = {};
+    return _this;
+  }
+
+  _createClass(ContactsTable, [{
+    key: 'render',
+    value: function render() {
+      var addContact = this.props.addContact;
+
+      function onAfterInsertRow(row) {
+        console.log(row);
+        addContact({
+          first_name: row.first_name,
+          last_name: row.last_name,
+          email: row.email
+        });
+      }
+
+      var options = {
+        afterInsertRow: onAfterInsertRow // A hook for after insert rows
+      };
+
+      return _react2.default.createElement(
+        'div',
         null,
-        'Contact List'
-      ),
-      props.contacts && _react2.default.createElement(
-        _reactBootstrapTable.BootstrapTable,
-        { data: props.contacts, insertRow: true, striped: true, hover: true, options: options },
         _react2.default.createElement(
-          _reactBootstrapTable.TableHeaderColumn,
-          { dataField: 'id', hidden: true, isKey: true, dataAlign: 'center', dataSort: true },
-          'ID'
-        ),
-        _react2.default.createElement(
-          _reactBootstrapTable.TableHeaderColumn,
-          { dataField: 'first_name', dataSort: true, filter: { type: 'TextFilter', delay: 100 } },
-          'First Name'
-        ),
-        _react2.default.createElement(
-          _reactBootstrapTable.TableHeaderColumn,
-          { dataField: 'last_name', dataSort: true, filter: { type: 'TextFilter', delay: 100 } },
-          'Last Name'
-        ),
-        _react2.default.createElement(
-          _reactBootstrapTable.TableHeaderColumn,
-          { dataField: 'email', dataSort: true, filter: { type: 'TextFilter', delay: 100 } },
-          'E-Mail'
+          _reactBootstrap.Panel,
+          { header: 'Contact List' },
+          _react2.default.createElement(
+            'h1',
+            null,
+            'Contact List'
+          ),
+          this.props.contacts && _react2.default.createElement(
+            _reactBootstrapTable.BootstrapTable,
+            { data: this.props.contacts, insertRow: true, striped: true, hover: true, options: options },
+            _react2.default.createElement(
+              _reactBootstrapTable.TableHeaderColumn,
+              { dataField: 'id', hidden: true, isKey: true, dataAlign: 'center', dataSort: true },
+              'ID'
+            ),
+            _react2.default.createElement(
+              _reactBootstrapTable.TableHeaderColumn,
+              { dataField: 'first_name', dataSort: true, filter: { type: 'TextFilter', delay: 100 } },
+              'First Name'
+            ),
+            _react2.default.createElement(
+              _reactBootstrapTable.TableHeaderColumn,
+              { dataField: 'last_name', dataSort: true, filter: { type: 'TextFilter', delay: 100 } },
+              'Last Name'
+            ),
+            _react2.default.createElement(
+              _reactBootstrapTable.TableHeaderColumn,
+              { dataField: 'email', dataSort: true, filter: { type: 'TextFilter', delay: 100 } },
+              'E-Mail'
+            )
+          )
         )
-      )
-    )
-  );
-};
+      );
+    }
+  }]);
+
+  return ContactsTable;
+}(_react.Component);
+
+;
 
 // ------------- Container
+
+
 var mapStateToProps = function mapStateToProps(state) {
   return {
     contacts: state.contacts.allContacts
   };
 };
 
-var mapDispatchToProps = null;
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    addContact: function addContact(data) {
+      return dispatch((0, _contacts.addContact)(data));
+    }
+  };
+};
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ContactsTable);
 
