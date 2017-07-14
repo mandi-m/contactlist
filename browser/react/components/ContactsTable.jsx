@@ -1,21 +1,34 @@
 // Required libraries
 import React from 'react';
 import { connect } from 'react-redux';
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
+import { Form, FormGroup, Button, Panel } from 'react-bootstrap'
 
 // ------------- Component
 const ContactsTable = (props) => {
+  console.log(props.contacts.allContacts)
   return (
     <div>
-      <h1>Contact List</h1>
+      <Panel header={'Contact List'}>
+        <h1>Contact List</h1>
+      </Panel>
       <ul>
-        { props.contacts.map(contact => (
-        <li key={ contact.id }>
-          <div>
-            <h4>{ contact.first_name }</h4>
-          </div>
-        </li>
-        )) }
+        {props.contacts.map(contact => (
+          <li key={contact.id}>
+            <div>
+              <h4>{contact.first_name} {contact.last_name}, {contact.email} </h4>
+            </div>
+          </li>
+        ))}
       </ul>
+
+      <BootstrapTable data={props.contacts.allContacts} striped={true} hover={true}>
+        <TableHeaderColumn dataField="id" hidden={true} isKey={true} dataAlign="center" dataSort={true}>ID</TableHeaderColumn>
+        <TableHeaderColumn dataField="first_name" dataSort={true}>First Name</TableHeaderColumn>
+        <TableHeaderColumn dataField="last_name" dataSort={true}>Last Name</TableHeaderColumn>
+        <TableHeaderColumn dataField="email" dataSort={true}>E-Mail</TableHeaderColumn>
+      </BootstrapTable>
+
     </div>
   );
 };
