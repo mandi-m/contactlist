@@ -22,7 +22,7 @@ const Root = (props) => {
 // ------------ Container Component
 
 // Required files
-import { fetchContacts } from './reducers/contacts';
+import { fetchContacts, getContacts } from './reducers/contacts';
 
 const mapStateToProps = (state) => {
   return {
@@ -30,12 +30,14 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDisptachToProps = (dispatch) => {
-  return {
-    fetchContacts: () => {
-      dispatch(fetchContacts());
-    }
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+    fetchContacts: () => dispatch(fetchContacts())
+})
 
-export default connect(mapStateToProps, mapDisptachToProps)(Root);
+
+// const mapDispatchToProps = (dispatch) => ({
+//     // fetchContacts: () => dispatch(fetchContacts())
+//     getContacts: () => dispatch(getContacts())
+// })
+
+export default connect(mapStateToProps, mapDispatchToProps)(Root);

@@ -4,6 +4,11 @@ import axios from 'axios';
 // ----------- Actions
 const FETCH_CONTACTS = 'FETCH_CONTACTS';
 
+// ----------- Actions for redux-api-request
+export const FETCH_REQUEST = 'FETCH_REQUEST'
+export const FETCH_SUCCESS = 'FETCH_SUCCESS'
+export const FETCH_FAILURE = 'FETCH_FAILURE'
+
 // ----------- Action Creators
 export const receiveContacts = (contacts) => {
   return {
@@ -12,9 +17,26 @@ export const receiveContacts = (contacts) => {
   };
 };
 
+
+// ----------- Action Creator from redux-api-request
+import { API_REQUEST } from 'redux-api-request'
+
+export const getContacts = () => ({
+  type: API_REQUEST,
+  method: 'GET',
+  endpoint: '/contacts',
+  // body: {  },
+  request: FETCH_REQUEST,
+  success: FETCH_CONTACTS,
+  failure: FETCH_FAILURE
+})
+
+
 // ----------- Reducer
 const initialState = {
-  allContacts: []
+  allContacts: [],
+  status: 'pending',
+  result: null
 };
 
 export default function reducer (prevState = initialState, action) {
@@ -25,8 +47,12 @@ export default function reducer (prevState = initialState, action) {
       nextState.allContacts = action.contacts;
       break;
     }
+    case FETCH_SUCCESS: {
+      nextState.status = 'success',
+      nextState.result = action.result
+      break;
+    }
   }
-
   return nextState;
 }
 
