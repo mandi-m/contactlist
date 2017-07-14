@@ -47277,7 +47277,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // ------------- Component
 // Required libraries
 var ContactsTable = function ContactsTable(props) {
-  console.log(props.contacts.allContacts);
   return _react2.default.createElement(
     'div',
     null,
@@ -47290,33 +47289,9 @@ var ContactsTable = function ContactsTable(props) {
         'Contact List'
       )
     ),
-    _react2.default.createElement(
-      'ul',
-      null,
-      props.contacts.map(function (contact) {
-        return _react2.default.createElement(
-          'li',
-          { key: contact.id },
-          _react2.default.createElement(
-            'div',
-            null,
-            _react2.default.createElement(
-              'h4',
-              null,
-              contact.first_name,
-              ' ',
-              contact.last_name,
-              ', ',
-              contact.email,
-              ' '
-            )
-          )
-        );
-      })
-    ),
-    _react2.default.createElement(
+    props.contacts && _react2.default.createElement(
       _reactBootstrapTable.BootstrapTable,
-      { data: props.contacts.allContacts, striped: true, hover: true },
+      { data: props.contacts, striped: true, hover: true },
       _react2.default.createElement(
         _reactBootstrapTable.TableHeaderColumn,
         { dataField: 'id', hidden: true, isKey: true, dataAlign: 'center', dataSort: true },
@@ -47324,17 +47299,17 @@ var ContactsTable = function ContactsTable(props) {
       ),
       _react2.default.createElement(
         _reactBootstrapTable.TableHeaderColumn,
-        { dataField: 'first_name', dataSort: true },
+        { dataField: 'first_name', dataSort: true, filter: { type: 'TextFilter', delay: 100 } },
         'First Name'
       ),
       _react2.default.createElement(
         _reactBootstrapTable.TableHeaderColumn,
-        { dataField: 'last_name', dataSort: true },
+        { dataField: 'last_name', dataSort: true, filter: { type: 'TextFilter', delay: 100 } },
         'Last Name'
       ),
       _react2.default.createElement(
         _reactBootstrapTable.TableHeaderColumn,
-        { dataField: 'email', dataSort: true },
+        { dataField: 'email', dataSort: true, filter: { type: 'TextFilter', delay: 100 } },
         'E-Mail'
       )
     )

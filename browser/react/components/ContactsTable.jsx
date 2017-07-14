@@ -6,13 +6,12 @@ import { Form, FormGroup, Button, Panel } from 'react-bootstrap'
 
 // ------------- Component
 const ContactsTable = (props) => {
-  console.log(props.contacts.allContacts)
   return (
     <div>
       <Panel header={'Contact List'}>
         <h1>Contact List</h1>
       </Panel>
-      <ul>
+      {/* <ul>
         {props.contacts.map(contact => (
           <li key={contact.id}>
             <div>
@@ -20,15 +19,15 @@ const ContactsTable = (props) => {
             </div>
           </li>
         ))}
-      </ul>
-
-      <BootstrapTable data={props.contacts.allContacts} striped={true} hover={true}>
-        <TableHeaderColumn dataField="id" hidden={true} isKey={true} dataAlign="center" dataSort={true}>ID</TableHeaderColumn>
-        <TableHeaderColumn dataField="first_name" dataSort={true}>First Name</TableHeaderColumn>
-        <TableHeaderColumn dataField="last_name" dataSort={true}>Last Name</TableHeaderColumn>
-        <TableHeaderColumn dataField="email" dataSort={true}>E-Mail</TableHeaderColumn>
+      </ul> */}
+      {
+      props.contacts && <BootstrapTable data={props.contacts} striped={true} hover={true}>
+        <TableHeaderColumn dataField="id" hidden={true} isKey={true} dataAlign="center" dataSort={true} >ID</TableHeaderColumn>
+        <TableHeaderColumn dataField="first_name" dataSort={true} filter={{ type: 'TextFilter', delay: 100 }}>First Name</TableHeaderColumn>
+        <TableHeaderColumn dataField="last_name" dataSort={true} filter={{ type: 'TextFilter', delay: 100 }}>Last Name</TableHeaderColumn>
+        <TableHeaderColumn dataField="email" dataSort={true} filter={{ type: 'TextFilter', delay: 100 }}>E-Mail</TableHeaderColumn>
       </BootstrapTable>
-
+      }
     </div>
   );
 };
