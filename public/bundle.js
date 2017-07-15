@@ -48777,34 +48777,38 @@ var Home = function Home(props) {
     'div',
     null,
     _react2.default.createElement(
-      'h1',
-      null,
-      'Contacts'
-    ),
-    _react2.default.createElement(
-      'span',
-      null,
-      'Menu'
-    ),
-    _react2.default.createElement(
-      'ul',
+      'li',
       null,
       _react2.default.createElement(
-        'li',
-        null,
-        _react2.default.createElement(
-          _reactRouter.Link,
-          { to: '/' },
-          'Home'
-        )
-      ),
+        _reactRouter.Link,
+        { to: '/' },
+        'Home'
+      )
+    ),
+    _react2.default.createElement(
+      'div',
+      { className: 'container' },
       _react2.default.createElement(
-        'li',
-        null,
+        'header',
+        { className: 'jumbotron hero-spacer' },
         _react2.default.createElement(
-          _reactRouter.Link,
-          { to: '/contacts' },
-          'All of your contacts!'
+          'h1',
+          null,
+          'Welcome to Your Contact List!'
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          'Add and delete contacts to your list!'
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          _react2.default.createElement(
+            _reactRouter.Link,
+            { to: '/contacts', className: 'btn btn-primary btn-large' },
+            'See your contacts!'
+          )
         )
       )
     ),
