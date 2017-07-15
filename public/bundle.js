@@ -48794,12 +48794,12 @@ var Home = function Home(props) {
         _react2.default.createElement(
           'h1',
           null,
-          'Welcome to Your Contact List!'
+          'Welcome to Your Contact List'
         ),
         _react2.default.createElement(
           'p',
           null,
-          'Add and delete contacts to your list!'
+          'See your contacts. You can sort, filter, add and delete contacts.'
         ),
         _react2.default.createElement(
           'p',
@@ -48807,7 +48807,7 @@ var Home = function Home(props) {
           _react2.default.createElement(
             _reactRouter.Link,
             { to: '/contacts', className: 'btn btn-primary btn-large' },
-            'See your contacts!'
+            'See my contacts!'
           )
         )
       )
