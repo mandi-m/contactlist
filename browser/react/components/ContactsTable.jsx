@@ -12,7 +12,8 @@ class ContactsTable extends Component {
   }
 
   render() {
-    const addContact = this.props.addContact
+    const addContact = this.props.addContact;
+    const deleteContacts = this.props.deleteContacts;
 
     function onAfterInsertRow(row) {
       console.log(row)
@@ -24,15 +25,27 @@ class ContactsTable extends Component {
     }
 
     const options = {
-      afterInsertRow: onAfterInsertRow   // A hook for after insert rows
+      afterInsertRow: onAfterInsertRow,   // A hook for after insert rows
+      handleConfirmDeleteRow: customConfirm
     }
+
+    function customConfirm(next, dropRowKeys) {
+      if (confirm(`Are you sure you want to delete the contact(s) with the ID(s) ${dropRowKeys}?`)) {
+        deleteContacts(''+dropRowKeys)
+        next();
+      }
+    }
+
+    const selectRowProp = {
+      mode: 'checkbox'
+    };
 
     return (
       <div>
         <Panel header={'Contact List'}>
           <h1>Contact List</h1>
           {
-            this.props.contacts && <BootstrapTable data={this.props.contacts} insertRow={true} striped={true} hover={true} options={options}>
+            this.props.contacts && <BootstrapTable data={this.props.contacts} insertRow={true} striped={true} hover={true} options={options} exportCSV={ true } deleteRow={ true } selectRow={ selectRowProp } >
               <TableHeaderColumn dataField="id" hidden={true} isKey={true} dataAlign="center" dataSort={true} >ID</TableHeaderColumn>
               <TableHeaderColumn dataField="first_name" dataSort={true} filter={{ type: 'TextFilter', delay: 100 }}>First Name</TableHeaderColumn>
               <TableHeaderColumn dataField="last_name" dataSort={true} filter={{ type: 'TextFilter', delay: 100 }}>Last Name</TableHeaderColumn>
@@ -46,7 +59,7 @@ class ContactsTable extends Component {
 };
 
 // ------------- Container
-import {addContact} from '../reducers/contacts'
+import {addContact, deleteContacts} from '../reducers/contacts'
 
 const mapStateToProps = (state) => {
   return {
@@ -55,7 +68,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    addContact: data => dispatch(addContact(data))
+    addContact: data => dispatch(addContact(data)),
+    deleteContacts: data => dispatch(deleteContacts(data))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactsTable);

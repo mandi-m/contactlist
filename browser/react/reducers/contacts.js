@@ -3,6 +3,7 @@ import axios from 'axios';
 
 // ----------- Actions
 const FETCH_CONTACTS = 'FETCH_CONTACTS';
+const DELETE_CONTACTS = 'DELETE_CONTACTS';
 
 // ----------- Actions for redux-api-request
 export const FETCH_REQUEST = 'FETCH_REQUEST'
@@ -69,6 +70,14 @@ export const fetchContacts = () => {
 
 export const addContact = (contactData) => (dispatch) => {
     axios.post('api/contacts/', contactData)
+      .then( () => {
+        dispatch(fetchContacts());
+      })
+      .catch(console.error);
+}
+
+export const deleteContacts = (contactToDelete) => (dispatch) => {
+    axios.delete(`api/contacts/${contactToDelete}`)
       .then( () => {
         dispatch(fetchContacts());
       })

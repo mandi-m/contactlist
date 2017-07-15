@@ -24,3 +24,13 @@ routerContacts.get('/', (req, res, next) => {
     })
     .catch(next);
 });
+
+routerContacts.delete('/:id', (req, res, next) => {
+  Contacts.findById(req.params.id)
+  .then(foundContactsToDelete => {
+    return foundContactsToDelete.destroy()
+  }).then((deletedContacts) => {
+      res.status(200).send(deletedContacts);
+    })
+    .catch(next);
+});
